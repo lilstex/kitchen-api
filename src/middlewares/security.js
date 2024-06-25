@@ -21,7 +21,20 @@ const authenticateJWT = (req, res, next) => {
     if (nonRestricted.includes(req.path)) {
         next()
     } else {
-        const token = req.header("Authorization")
+        // Initialize the token variable
+        let token
+
+        // Check for authorization header
+        if (req.headers.authorization) {
+            // Split the authorization header into type and token
+            const [authType, authToken] = req.headers.authorization.split(" ")
+
+            // Determine if the authType is "Bearer", and set the token accordingly
+            token =
+                authType.toLowerCase() === "bearer"
+                    ? authToken
+                    : req.headers.authorization
+        }
         if (!token) {
             return Response(
                 res,
