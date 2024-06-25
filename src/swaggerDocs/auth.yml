@@ -1,0 +1,119 @@
+---
+paths:
+    /api/v1/auth/register-customer:
+        post:
+            tags:
+                - AUTHENTICATION ROUTES
+            summary: ACCOUNT REGISTRATION ENDPOINT
+            produces:
+                - application/json
+            parameters:
+                - in: body
+                  name: Account registration
+                  description: It enables customers create accounts
+                  required: true
+                  schema:
+                      $ref: "#/definitions/register"
+            responses:
+                201:
+                    description: should return successful
+                    examples:
+                        application/json:
+                            {
+                                "status": true,
+                                "message": "Account registered successfully",
+                                "data":
+                                    {
+                                        "id": 1,
+                                        "email": "johndoe@gmail.com",
+                                        "createdAt": "2024-06-25T16:07:35.787Z",
+                                        "updatedAt": "2024-06-25T16:07:35.787Z",
+                                    },
+                            }
+
+    /api/v1/auth/vendor-login:
+        post:
+            tags:
+                - AUTHENTICATION ROUTES
+            summary: VENDOR LOGIN ENDPOINT
+            produces:
+                - application/json
+            parameters:
+                - in: body
+                  name: login endpoint
+                  description: It enables vendors to login
+                  required: true
+                  schema:
+                      $ref: "#/definitions/vendor-login"
+            responses:
+                200:
+                    description: should return login successful
+                    examples:
+                        application/json:
+                            {
+                                "status": true,
+                                "message": "Login successful",
+                                "data":
+                                    {
+                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE5MzMxNzAzfQ.OqttAVTrzZYgJFbS3a7kiDA139-AvBU9oFFhe7STwZo",
+                                    },
+                            }
+
+    /api/v1/auth/customer-login:
+        post:
+            tags:
+                - AUTHENTICATION ROUTES
+            summary: CUSTOMER LOGIN ENDPOINT
+            produces:
+                - application/json
+            parameters:
+                - in: body
+                  name: login endpoint
+                  description: It enables customers to login
+                  required: true
+                  schema:
+                      $ref: "#/definitions/login"
+            responses:
+                200:
+                    description: should return login successful
+                    examples:
+                        application/json:
+                            {
+                                "status": true,
+                                "message": "Login successful",
+                                "data":
+                                    {
+                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE5MzMxNzAzfQ.OqttAVTrzZYgJFbS3a7kiDA139-AvBU9oFFhe7STwZo",
+                                    },
+                            }
+
+definitions:
+    register:
+        type: object
+        properties:
+            email:
+                type: string
+                default: lilstex@gmail.com
+            password:
+                type: string
+                default: password
+
+    login:
+        type: object
+        properties:
+            email:
+                type: string
+                default: lilstex@gmail.com
+            password:
+                type: string
+                default: password
+
+    vendor-login:
+        type: object
+        properties:
+            email:
+                type: string
+                default: resa@gmail.com
+            password:
+                type: string
+                default: password
