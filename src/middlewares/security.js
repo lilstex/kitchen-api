@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken")
 const Response = require("../helper/response")
 
 const nonRestricted = [
-    "/api/v1/auth/register-customer",
-    "/api/v1/auth/customer-login",
-    "/api/v1/auth/vendor-login",
+    "/auth/customers/register",
+    "/auth/customers/login",
+    "/auth/vendors/login",
 ]
 
 /**
@@ -49,7 +49,7 @@ const authenticateJWT = (req, res, next) => {
             // Restrict access to vendor routes.
             const userType = req.user.type
             const path = req.path
-            if (path.startsWith("/api/v1/vendor")) {
+            if (path.startsWith("/vendors")) {
                 if (userType !== "vendor") {
                     return Response(
                         res,
@@ -62,7 +62,7 @@ const authenticateJWT = (req, res, next) => {
                 }
             }
             // Restrict access to vendor routes.
-            if (path.startsWith("/api/v1/customer")) {
+            if (path.startsWith("/customers")) {
                 if (userType !== "customer") {
                     return Response(
                         res,

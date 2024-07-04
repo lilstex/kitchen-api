@@ -76,7 +76,7 @@ const customerLogin = async (req, res) => {
                 {
                     status: true,
                     message: "Login successful",
-                    data: { token },
+                    data: { token, id: customer.id },
                 },
                 200,
             )
@@ -131,19 +131,19 @@ const vendorLogin = async (req, res) => {
                 {
                     status: true,
                     message: "Login successful",
-                    data: { token },
+                    data: { token, id: vendor.id },
                 },
                 200,
             )
         } else {
-            // return Response(
-            //     res,
-            //     {
-            //         status: false,
-            //         message: "Invalid credentials",
-            //     },
-            //     400,
-            // )
+            return Response(
+                res,
+                {
+                    status: false,
+                    message: "Invalid credentials",
+                },
+                400,
+            )
         }
     } catch (error) {
         console.log(error)

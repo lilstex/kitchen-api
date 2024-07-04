@@ -67,7 +67,7 @@ const listVendors = async (req, res) => {
  */
 const getVendor = async (req, res) => {
     try {
-        const vendor = await Vendor.findByPk(req.params.id, {
+        const vendor = await Vendor.findByPk(req.params.vendorId, {
             attributes: { exclude: ["password"] },
         })
 
@@ -122,7 +122,7 @@ const listMenu = async (req, res) => {
         const offset = (page - 1) * pageSize
 
         const { count, rows } = await MenuItem.findAndCountAll({
-            where: { VendorId: req.params.id },
+            where: { VendorId: req.params.vendorId },
             offset: offset,
             limit: pageSize,
             order: [["createdAt", "DESC"]],
@@ -178,7 +178,11 @@ const listMenu = async (req, res) => {
  */
 const getMenu = async (req, res) => {
     try {
-        const menuItem = await MenuItem.findByPk(req.params.menuId, {
+        const menuItem = await MenuItem.findOne({
+            where: {
+                id: req.params.menuId,
+                VendorId: req.params.vendorId,
+            },
             include: [
                 {
                     model: Vendor,

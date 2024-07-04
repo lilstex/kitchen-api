@@ -4,21 +4,30 @@ const vendorController = require("../controllers/vendorController")
 const Validate = require("../middlewares/validate")
 const validator = require("../validators/vendorValidator")
 
-router.get("/:id", Validate(validator.empty), vendorController.getVendor)
-router.get("/:id/menu", Validate(validator.listMenu), vendorController.listMenu)
+router.get("/:vendorId", Validate(validator.empty), vendorController.getVendor)
+
+router.get(
+    "/:vendorId/menu",
+    Validate(validator.listMenu),
+    vendorController.listMenu,
+)
+
 router.post(
-    "/:id/create/menu",
+    "/:vendorId/menu",
     Validate(validator.createMenu),
     vendorController.createMenu,
 )
-router.patch(
-    "/menu/update/:menuId",
+
+router.put(
+    "/:vendorId/menu/:menuId",
     Validate(validator.updateMenu),
     vendorController.updateMenu,
 )
-router.get("/menu/:menuId", vendorController.getMenu)
+
+router.get("/:vendorId/menu/:menuId", vendorController.getMenu)
+
 router.delete(
-    "/menu/:id",
+    "/:vendorId/menu/:menuId",
     Validate(validator.empty),
     vendorController.deleteMenu,
 )

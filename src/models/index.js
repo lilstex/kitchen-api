@@ -4,23 +4,10 @@ const Vendor = require("./vendor")
 const MenuItem = require("./menu")
 const Customer = require("./customer")
 
-/**
- * Synchronize the database models with the database schema.
- *
- * @async
- * @function syncDB
- * @returns {Promise<void>} A promise that resolves when the database models are synchronized.
- */
-const syncDB = async () => {
-    try {
-        // Synchronize models with database schema
-        await sequelize.sync()
-        console.log("Database synchronized successfully.")
-    } catch (error) {
-        console.error("Error synchronizing database:", error)
-        throw error
-    }
-}
+// Define models to migrate
+const MigrationModel = [Vendor, MenuItem, Customer]
+
+// await sequelize.sync()
 
 /**
  * Seed initial data into the database.
@@ -102,43 +89,43 @@ const seedMenuItems = async (vendors) => {
         const menuItemsData = [
             {
                 name: "Pasta",
-                price: 12.5,
+                price: "12.5",
                 description: "A little pasta",
                 VendorId: vendors.find((v) => v.email == "resa@gmail.com")?.id,
             },
             {
                 name: "Burger",
-                price: 8.5,
+                price: "8.5",
                 description: "A little burger",
                 VendorId: vendors.find((v) => v.email == "resa@gmail.com")?.id,
             },
             {
                 name: "Pizza",
-                price: 10.0,
+                price: "10.0",
                 description: "A little pizza",
                 VendorId: vendors.find((v) => v.email == "resa@gmail.com")?.id,
             },
             {
                 name: "Shawarma",
-                price: 10.0,
+                price: "10.0",
                 description: "A little shawarma",
                 VendorId: vendors.find((v) => v.email == "resb@gmail.com")?.id,
             },
             {
                 name: "Cassava Chips",
-                price: 10.0,
+                price: "10.0",
                 description: "A little chips",
                 VendorId: vendors.find((v) => v.email == "resb@gmail.com")?.id,
             },
             {
                 name: "Plaintain Chips",
-                price: 10.0,
+                price: "10.0",
                 description: "A little plaintain chips",
                 VendorId: vendors.find((v) => v.email == "resc@gmail.com")?.id,
             },
             {
                 name: "Lemonade toast",
-                price: 10.0,
+                price: "10.0",
                 description: "A lemonade toast",
                 VendorId: vendors.find((v) => v.email == "resc@gmail.com")?.id,
             },
@@ -160,7 +147,7 @@ const seedMenuItems = async (vendors) => {
 }
 
 /**
- * Initialize the database by synchronizing models and seeding initial data.
+ * Initialize the database by migrating, synchronizing models and seeding initial data.
  *
  * @async
  * @function initDB
@@ -168,7 +155,16 @@ const seedMenuItems = async (vendors) => {
  */
 const initDB = async () => {
     try {
-        await syncDB() // Sync models with database schema
+        await sequelize.authenticate()
+        console.log("Connection has been established successfully.")
+        // Run migration when not in test environment
+        if (process.env.NODE_ENV !== "test") {
+            for (const model of MigrationModel) {
+                await model.sync({ alter: true })
+            }
+            console.log("Migrated schemas successfully")
+        }
+
         await seedDB() // Seed initial data into the database
     } catch (error) {
         console.error("Error initializing database:", error)
@@ -176,4 +172,55 @@ const initDB = async () => {
     }
 }
 
-module.exports = { sequelize, initDB, Vendor, MenuItem, Customer }
+/**
+ * Disconnect the database by truncating records and closing the connection.
+ *
+ * @async
+ * @function disconnectDatabase
+ * @returns {Promise<void>} A promise that resolves when the database disconnection is complete.
+ */
+const disconnectDatabase = async () => {
+    try {
+        // Disable foreign key checks
+        await sequelize.query("SET FOREIGN_KEY_CHECKS = 0")
+
+        // Truncate records for each model
+        await Promise.all(
+            MigrationModel.map(async (model) => {
+                try {
+                    await model.destroy({
+                        truncate: true,
+                        force: true, // Force to handle foreign key constraints internally
+                    })
+                    console.log(`Records truncated for model ${model.name}`)
+                } catch (error) {
+                    console.error(
+                        `Error truncating table ${model.name}:`,
+                        error,
+                    )
+                    throw error
+                }
+            }),
+        )
+
+        // Enable foreign key checks back
+        await sequelize.query("SET FOREIGN_KEY_CHECKS = 1")
+
+        console.log("Test records deleted successfully.")
+
+        // Close the connection
+        await sequelize.close()
+        console.log("Test database connection closed successfully.")
+    } catch (err) {
+        console.error("Error while disconnecting from the test database:", err)
+    }
+}
+
+module.exports = {
+    sequelize,
+    initDB,
+    Vendor,
+    MenuItem,
+    Customer,
+    disconnectDatabase,
+}

@@ -14,20 +14,19 @@ const Response = require("../helper/response")
 const getVendor = async (req, res) => {
     try {
         const { userId } = req.form
-
         // Check if userId is equal to vendor id
-        if (userId !== parseInt(req.params.id)) {
+        if (userId !== parseInt(req.params.vendorId, 10)) {
             return Response(
                 res,
                 {
                     status: false,
-                    message: "Not authorised to view this vendor detail",
+                    message: "Forbidden to view this vendor detail",
                 },
                 403,
             )
         }
 
-        const vendor = await Vendor.findByPk(req.params.id, {
+        const vendor = await Vendor.findByPk(req.params.vendorId, {
             attributes: { exclude: ["password"] },
         })
 
@@ -83,19 +82,19 @@ const listMenu = async (req, res) => {
         const offset = (page - 1) * pageSize
 
         // Check if userId is equal to vendor id
-        if (userId !== parseInt(req.params.id)) {
+        if (userId !== parseInt(req.params.vendorId, 10)) {
             return Response(
                 res,
                 {
                     status: false,
-                    message: "Not authorised to view this vendor menu",
+                    message: "Forbidden to view this vendor menu",
                 },
                 403,
             )
         }
 
         const { count, rows } = await MenuItem.findAndCountAll({
-            where: { VendorId: req.params.id },
+            where: { VendorId: req.params.vendorId },
             offset: offset,
             limit: pageSize,
             order: [["createdAt", "DESC"]],
@@ -154,7 +153,7 @@ const createMenu = async (req, res) => {
         const { name, price, description, userId } = req.form
 
         // Check if userId is equal to req.params.id
-        if (userId !== parseInt(req.params.id, 10)) {
+        if (userId !== parseInt(req.params.vendorId, 10)) {
             return Response(
                 res,
                 {
@@ -170,7 +169,7 @@ const createMenu = async (req, res) => {
             name,
             price,
             description,
-            VendorId: req.params.id,
+            VendorId: req.params.vendorId,
         })
 
         return Response(
@@ -330,7 +329,7 @@ const deleteMenu = async (req, res) => {
         const { userId } = req.form
 
         // Check if userId matches VendorId of the menu item
-        const menuItem = await MenuItem.findByPk(req.params.id)
+        const menuItem = await MenuItem.findByPk(req.params.menuId)
         if (!menuItem) {
             return Response(
                 res,
@@ -354,7 +353,7 @@ const deleteMenu = async (req, res) => {
         }
 
         // Delete the menu item
-        await MenuItem.destroy({ where: { id: req.params.id } })
+        await MenuItem.destroy({ where: { id: req.params.menuId } })
 
         return Response(
             res,

@@ -1,6 +1,6 @@
 ---
 paths:
-    /api/v1/customer/vendors:
+    /customers/{customerId}/vendors:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -13,6 +13,12 @@ paths:
                   description: access token
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+                - in: path
+                  name: customerId
+                  required: true
+                  schema:
+                      type: integer
+                      example: 1
                 - in: query
                   name: page
                   type: number
@@ -65,7 +71,7 @@ paths:
                                     },
                             }
 
-    /api/v1/customer/vendors/{id}:
+    /customers/{customerId}/vendors/{vendorId}:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -79,7 +85,13 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
-                  name: id
+                  name: customerId
+                  required: true
+                  schema:
+                      type: integer
+                      example: 1
+                - in: path
+                  name: vendorId
                   required: true
                   schema:
                       type: integer
@@ -103,7 +115,7 @@ paths:
                                     },
                             }
 
-    /api/v1/customer/vendors/{id}/menu:
+    /customers/{customerId}/vendors/{vendorId}/menu:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -117,7 +129,13 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
-                  name: id
+                  name: customerId
+                  required: true
+                  schema:
+                      type: integer
+                      example: 1
+                - in: path
+                  name: vendorId
                   required: true
                   schema:
                       type: integer
@@ -145,7 +163,7 @@ paths:
                                                 {
                                                     "id": 1,
                                                     "name": "Pasta",
-                                                    "price": 12.5,
+                                                    "price": "12.5",
                                                     "description": "A little pasta",
                                                     "createdAt": "2024-06-25T19:56:12.000Z",
                                                     "updatedAt": "2024-06-25T19:56:12.000Z",
@@ -161,7 +179,7 @@ paths:
                                                 {
                                                     "id": 2,
                                                     "name": "Burger",
-                                                    "price": 8.5,
+                                                    "price": "8.5",
                                                     "description": "A little burger",
                                                     "createdAt": "2024-06-25T19:56:12.000Z",
                                                     "updatedAt": "2024-06-25T19:56:12.000Z",
@@ -177,7 +195,7 @@ paths:
                                                 {
                                                     "id": 3,
                                                     "name": "Pizza",
-                                                    "price": 10,
+                                                    "price": "10",
                                                     "description": "A little pizza",
                                                     "createdAt": "2024-06-25T19:56:12.000Z",
                                                     "updatedAt": "2024-06-25T19:56:12.000Z",
@@ -198,7 +216,7 @@ paths:
                                     },
                             }
 
-    /api/v1/customer/menu/{menuId}:
+    /customers/{customerId}/vendors/{vendorId}/menu/{menuId}:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -211,6 +229,18 @@ paths:
                   description: access token
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+                - in: path
+                  name: customerId
+                  required: true
+                  schema:
+                      type: integer
+                      example: 1
+                - in: path
+                  name: vendorId
+                  required: true
+                  schema:
+                      type: integer
+                      example: 1
                 - in: path
                   name: menuId
                   required: true

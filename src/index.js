@@ -19,6 +19,11 @@ dotenv.config()
  */
 const app = express()
 
+// Initialize Database connection
+if (process.env.NODE_ENV !== "test") {
+    initDB()
+}
+
 // Middleware to enable Cross-Origin Resource Sharing
 app.use(cors())
 app.use(bodyParser.json())
@@ -54,11 +59,10 @@ const PORT = process.env.PORT || 2020
  * @returns {Promise<void>} A promise that resolves when the server is started and the database is initialized.
  * Author: Emmanuel
  */
-app.listen(PORT, async () => {
-    await initDB()
+const server = app.listen(PORT, async () => {
     console.log(
         `Kitchen API Service running on http://localhost:${PORT}/api-docs`,
     )
 })
 
-module.exports = app
+module.exports = server

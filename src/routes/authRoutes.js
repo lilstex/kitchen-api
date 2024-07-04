@@ -5,17 +5,17 @@ const Validate = require("../middlewares/validate")
 const validator = require("../validators/authValidator")
 
 router.post(
-    "/register-customer",
+    "/customers/register",
     Validate(validator.register),
     authController.register,
 )
 router.post(
-    "/customer-login",
+    "/customers/login",
     Validate(validator.login),
     authController.customerLogin,
 )
 router.post(
-    "/vendor-login",
+    "/vendors/login",
     Validate(validator.login),
     authController.vendorLogin,
 )
