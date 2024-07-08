@@ -50,9 +50,9 @@ describe("CUSTOMER", () => {
         customerId = res.body.data.id
     })
 
-    it("/customer/:customerId/vendors - Get all vendors", async () => {
+    it("/customer/vendors - Get all vendors", async () => {
         const res = await request(app)
-            .get("/customers/1/vendors")
+            .get("/customers/vendors")
             .set("Authorization", `Bearer ${customerToken}`)
 
         expect(res.statusCode).toBe(200)
@@ -62,9 +62,9 @@ describe("CUSTOMER", () => {
         expect(Array.isArray(res.body.data.vendors)).toBe(true)
     })
 
-    it("/customer/:customerId/vendors/:vendorId - Get vendor detail", async () => {
+    it("/customer/vendors/:vendorId - Get vendor detail", async () => {
         const res = await request(app)
-            .get("/customers/1/vendors/1")
+            .get("/customers/vendors/1")
             .set("Authorization", `Bearer ${customerToken}`)
 
         expect(res.statusCode).toBe(200)
@@ -73,9 +73,9 @@ describe("CUSTOMER", () => {
         expect(res.body.data.email).toBe("resa@gmail.com")
     })
 
-    it("/customer/:customerId/vendors/:vendorId/menu - List menu of a vendor", async () => {
+    it("/customer/vendors/:vendorId/menu - List menu of a vendor", async () => {
         const res = await request(app)
-            .get("/customers/1/vendors/1/menu")
+            .get("/customers/vendors/1/menu")
             .set("Authorization", `Bearer ${customerToken}`)
 
         expect(res.statusCode).toBe(200)
@@ -85,9 +85,9 @@ describe("CUSTOMER", () => {
         expect(Array.isArray(res.body.data.menu)).toBe(true)
     })
 
-    it("/customer/:customerId/vendors/:vendorId/menu/:menuId - View detail of a menu from a vendor", async () => {
+    it("/customer/vendors/:vendorId/menu/:menuId - View detail of a menu from a vendor", async () => {
         const res = await request(app)
-            .get("/customers/1/vendors/1/menu/1")
+            .get("/customers/vendors/1/menu/1")
             .set("Authorization", `Bearer ${customerToken}`)
 
         expect(res.statusCode).toBe(200)
@@ -106,9 +106,9 @@ describe("CUSTOMER", () => {
         expect(res.body.message).toBe("Invalid credentials")
     })
 
-    it("/customer/:customerId/vendors/:vendorId/menu/:menuId - Get menu item of a different vendor", async () => {
+    it("/customer/vendors/:vendorId/menu/:menuId - Get menu item of a different vendor", async () => {
         const res = await request(app)
-            .get("/customers/1/vendors/1/menu/5")
+            .get("/customers/vendors/1/menu/5")
             .set("Authorization", `Bearer ${customerToken}`)
 
         expect(res.statusCode).toBe(404)
@@ -121,6 +121,21 @@ describe("VENDOR", () => {
     let vendorToken
     let vendorId
     let menuId
+    it("/vendors/login - Should login vendor successfully", async () => {
+        const res = await request(app).post("/auth/vendors/login").send({
+            email: "resa@gmail.com",
+            password: "password",
+        })
+        expect(res.statusCode).toBe(200)
+        expect(res.body.status).toBe(true)
+        expect(res.body.data).toHaveProperty("token")
+        expect(res.body.data).toHaveProperty("id")
+        // Store the token in the vendor token variable
+        vendorToken = res.body.data.token
+        // Store the vendor ID in the vendor ID variable
+        vendorId = res.body.data.id
+    })
+
     it("/vendors/login - Should login vendor successfully", async () => {
         const res = await request(app).post("/auth/vendors/login").send({
             email: "resa@gmail.com",
@@ -178,7 +193,7 @@ describe("VENDOR", () => {
 
     it("/vendors/:vendorId/menu/:menuId - Update menu", async () => {
         const res = await request(app)
-            .put(`/vendors/${vendorId}/menu/${menuId}`)
+            .patch(`/vendors/${vendorId}/menu/${menuId}`)
             .send({
                 name: "beans",
                 price: "25.55",
@@ -222,7 +237,7 @@ describe("VENDOR", () => {
 
     it("/vendors/:vendorId/menu/:menuId - Update a non existent menu item", async () => {
         const res = await request(app)
-            .put(`/vendors/${vendorId}/menu/${menuId}`)
+            .patch(`/vendors/${vendorId}/menu/${menuId}`)
             .send({
                 name: "beans",
                 price: "25.55",

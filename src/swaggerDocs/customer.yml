@@ -1,6 +1,6 @@
 ---
 paths:
-    /customers/{customerId}/vendors:
+    /customers/vendors:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -13,12 +13,6 @@ paths:
                   description: access token
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-                - in: path
-                  name: customerId
-                  required: true
-                  schema:
-                      type: integer
-                      example: 1
                 - in: query
                   name: page
                   type: number
@@ -71,7 +65,7 @@ paths:
                                     },
                             }
 
-    /customers/{customerId}/vendors/{vendorId}:
+    /customers/vendors/{vendorId}:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -84,12 +78,6 @@ paths:
                   description: access token
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-                - in: path
-                  name: customerId
-                  required: true
-                  schema:
-                      type: integer
-                      example: 1
                 - in: path
                   name: vendorId
                   required: true
@@ -115,7 +103,7 @@ paths:
                                     },
                             }
 
-    /customers/{customerId}/vendors/{vendorId}/menu:
+    /customers/vendors/{vendorId}/menu:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -128,12 +116,6 @@ paths:
                   description: access token
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-                - in: path
-                  name: customerId
-                  required: true
-                  schema:
-                      type: integer
-                      example: 1
                 - in: path
                   name: vendorId
                   required: true
@@ -216,7 +198,7 @@ paths:
                                     },
                             }
 
-    /customers/{customerId}/vendors/{vendorId}/menu/{menuId}:
+    /customers/vendors/{vendorId}/menu/{menuId}:
         get:
             tags:
                 - CUSTOMER RESTRICTED ROUTES
@@ -229,12 +211,6 @@ paths:
                   description: access token
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-                - in: path
-                  name: customerId
-                  required: true
-                  schema:
-                      type: integer
-                      example: 1
                 - in: path
                   name: vendorId
                   required: true

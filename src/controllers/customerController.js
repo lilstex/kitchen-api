@@ -1,107 +1,32 @@
-const { Vendor, MenuItem } = require("../models")
+const CustomerService = require("../services/customerService")
 const Response = require("../helper/response")
 
 /**
- * List all vendors with pagination.
+ * List vendors
  *
  * @async
  * @function listVendors
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
- * @returns {Promise<{ status: boolean, message: string, data?: any }>} Contains status and message
  * Author: Emmanuel
  */
 const listVendors = async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1 // Current page number, default to 1 if not provided
-        const pageSize = parseInt(req.query.pageSize) || 10 // Number of records per page, default to 10 if not provided
-
-        const offset = (page - 1) * pageSize // Offset for Sequelize query
-
-        const { count, rows } = await Vendor.findAndCountAll({
-            offset: offset,
-            limit: pageSize,
-            order: [["createdAt", "DESC"]],
-            attributes: { exclude: ["password"] },
-        })
-
-        const totalPages = Math.ceil(count / pageSize) // Calculate total number of pages
-
-        return Response(
-            res,
-            {
-                status: true,
-                message: "List of vendors retrieved successfully",
-                data: {
-                    vendors: rows,
-                    currentPage: page,
-                    pageSize: pageSize,
-                    totalPages: totalPages,
-                    totalItems: count,
-                },
-            },
-            200,
-        )
-    } catch (error) {
-        console.error(error)
-        return Response(
-            res,
-            {
-                status: false,
-                message: "An error occurred while fetching list of vendors",
-            },
-            500,
-        )
-    }
+    const { code, ...data } = await CustomerService.listVendors(req.form)
+    return Response(res, data, code)
 }
 
 /**
- * Get vendor information by ID.
+ * Get vendor
  *
  * @async
  * @function getVendor
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
- * @returns {Promise<{ status: boolean, message: string, data?: any }>} Contains status and message
  * Author: Emmanuel
  */
 const getVendor = async (req, res) => {
-    try {
-        const vendor = await Vendor.findByPk(req.params.vendorId, {
-            attributes: { exclude: ["password"] },
-        })
-
-        if (!vendor) {
-            return Response(
-                res,
-                {
-                    status: false,
-                    message: "Vendor not found",
-                },
-                404,
-            )
-        }
-
-        return Response(
-            res,
-            {
-                status: true,
-                message: "Vendor retrieved successfully",
-                data: vendor,
-            },
-            200,
-        )
-    } catch (error) {
-        console.error(error)
-        return Response(
-            res,
-            {
-                status: false,
-                message: "An error occurred while fetching vendor information",
-            },
-            500,
-        )
-    }
+    const { code, ...data } = await CustomerService.getVendor(req.form)
+    return Response(res, data, code)
 }
 
 /**
@@ -111,59 +36,11 @@ const getVendor = async (req, res) => {
  * @function listMenu
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
- * @returns {Promise<{ status: boolean, message: string, data?: any }>} Contains status and message
  * Author: Emmanuel
  */
 const listMenu = async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1 // Current page number, default to 1 if not provided
-        const pageSize = parseInt(req.query.pageSize) || 10 // Number of records per page, default to 10 if not provided
-
-        const offset = (page - 1) * pageSize
-
-        const { count, rows } = await MenuItem.findAndCountAll({
-            where: { VendorId: req.params.vendorId },
-            offset: offset,
-            limit: pageSize,
-            order: [["createdAt", "DESC"]],
-            include: [
-                {
-                    model: Vendor,
-                    attributes: {
-                        exclude: ["password", "createdAt", "updatedAt"],
-                    },
-                },
-            ],
-        })
-
-        const totalPages = Math.ceil(count / pageSize) // Calculate total number of pages
-
-        return Response(
-            res,
-            {
-                status: true,
-                message: "Menu items retrieved successfully",
-                data: {
-                    menu: rows,
-                    currentPage: page,
-                    pageSize: pageSize,
-                    totalPages: totalPages,
-                    totalItems: count,
-                },
-            },
-            200,
-        )
-    } catch (error) {
-        console.error(error)
-        return Response(
-            res,
-            {
-                status: false,
-                message: "An error occurred while fetching menu items",
-            },
-            500,
-        )
-    }
+    const { code, ...data } = await CustomerService.listMenu(req.form)
+    return Response(res, data, code)
 }
 
 /**
@@ -173,57 +50,11 @@ const listMenu = async (req, res) => {
  * @function getMenu
  * @param {Request} req - The request object.
  * @param {Response} res - The response object.
- * @returns {Promise<{ status: boolean, message: string, data?: any }>} Contains status and message
  * Author: Emmanuel
  */
 const getMenu = async (req, res) => {
-    try {
-        const menuItem = await MenuItem.findOne({
-            where: {
-                id: req.params.menuId,
-                VendorId: req.params.vendorId,
-            },
-            include: [
-                {
-                    model: Vendor,
-                    attributes: {
-                        exclude: ["password", "createdAt", "updatedAt"],
-                    },
-                },
-            ],
-        })
-
-        if (!menuItem) {
-            return Response(
-                res,
-                {
-                    status: false,
-                    message: "Menu item not found",
-                },
-                404,
-            )
-        }
-
-        return Response(
-            res,
-            {
-                status: true,
-                message: "Menu item retrieved successfully",
-                data: menuItem,
-            },
-            200,
-        )
-    } catch (error) {
-        console.error(error)
-        return Response(
-            res,
-            {
-                status: false,
-                message: "An error occurred while fetching menu item",
-            },
-            500,
-        )
-    }
+    const { code, ...data } = await CustomerService.getMenu(req.form)
+    return Response(res, data, code)
 }
 
 module.exports = {

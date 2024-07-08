@@ -7,7 +7,7 @@ const validator = require("../validators/authValidator")
 router.post(
     "/customers/register",
     Validate(validator.register),
-    authController.register,
+    authController.registerCustomer,
 )
 router.post(
     "/customers/login",

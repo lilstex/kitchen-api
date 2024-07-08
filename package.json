@@ -8,6 +8,9 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
+  "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
+  },
   "keywords": [
     "food",
     "restaurant",

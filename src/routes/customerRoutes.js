@@ -5,20 +5,25 @@ const Validate = require("../middlewares/validate")
 const validator = require("../validators/vendorValidator")
 
 router.get(
-    "/:customerId/vendors",
+    "/vendors",
     Validate(validator.listVendors),
     customerController.listVendors,
 )
-router.get("/:customerId/vendors/:vendorId", customerController.getVendor)
+router.get(
+    "/vendors/:vendorId",
+    Validate(validator.getVendor),
+    customerController.getVendor,
+)
 
 router.get(
-    "/:customerId/vendors/:vendorId/menu",
+    "/vendors/:vendorId/menu",
     Validate(validator.listMenu),
     customerController.listMenu,
 )
 
 router.get(
-    "/:customerId/vendors/:vendorId/menu/:menuId",
+    "/vendors/:vendorId/menu/:menuId",
+    Validate(validator.getMenu),
     customerController.getMenu,
 )
 
