@@ -7,7 +7,10 @@ module.exports = (schemaObj) => {
         const schema = Joi.object().keys(schemaObj).required().unknown(false)
 
         // Determine the value to validate based on the request method
-        const valueToValidate = req.method === "GET" ? req.query : req.body
+        const valueToValidate =
+            req.method === "GET"
+                ? { ...req.query, ...req.params }
+                : { ...req.body, ...req.params, ...req.query }
 
         // Validate the request data against the schema
         const { error, value: validatedData } = schema.validate(valueToValidate)

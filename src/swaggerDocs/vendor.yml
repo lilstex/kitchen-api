@@ -1,6 +1,6 @@
 ---
 paths:
-    /api/v1/vendor/{id}:
+    /vendors/{vendorId}:
         get:
             tags:
                 - VENDOR RESTRICTED ROUTES
@@ -14,7 +14,7 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
-                  name: id
+                  name: vendorId
                   required: true
                   schema:
                       type: integer
@@ -38,7 +38,7 @@ paths:
                                     },
                             }
 
-    /api/v1/vendor/{id}/menu:
+    /vendors/{vendorId}/menu:
         get:
             tags:
                 - VENDOR RESTRICTED ROUTES
@@ -52,11 +52,11 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
-                  name: id
+                  name: vendorId
                   required: true
                   schema:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
                 - in: query
                   name: page
                   type: number
@@ -73,67 +73,76 @@ paths:
                             {
                                 "status": true,
                                 "message": "Menu items retrieved successfully",
-                                "data":
+                                "data": {
+                                    "menu": [
                                     {
-                                        "menu":
-                                            [
-                                                {
-                                                    "id": 1,
-                                                    "name": "Pasta",
-                                                    "price": 12.5,
-                                                    "description": "A little pasta",
-                                                    "createdAt": "2024-06-25T19:56:12.000Z",
-                                                    "updatedAt": "2024-06-25T19:56:12.000Z",
-                                                    "VendorId": 1,
-                                                    "Vendor":
-                                                        {
-                                                            "id": 1,
-                                                            "email": "resa@gmail.com",
-                                                            "name": "Restaurant A",
-                                                            "description": "Fine dining",
-                                                        },
-                                                },
-                                                {
-                                                    "id": 2,
-                                                    "name": "Burger",
-                                                    "price": 8.5,
-                                                    "description": "A little burger",
-                                                    "createdAt": "2024-06-25T19:56:12.000Z",
-                                                    "updatedAt": "2024-06-25T19:56:12.000Z",
-                                                    "VendorId": 1,
-                                                    "Vendor":
-                                                        {
-                                                            "id": 1,
-                                                            "email": "resa@gmail.com",
-                                                            "name": "Restaurant A",
-                                                            "description": "Fine dining",
-                                                        },
-                                                },
-                                                {
-                                                    "id": 3,
-                                                    "name": "Pizza",
-                                                    "price": 10,
-                                                    "description": "A little pizza",
-                                                    "createdAt": "2024-06-25T19:56:12.000Z",
-                                                    "updatedAt": "2024-06-25T19:56:12.000Z",
-                                                    "VendorId": 1,
-                                                    "Vendor":
-                                                        {
-                                                            "id": 1,
-                                                            "email": "resa@gmail.com",
-                                                            "name": "Restaurant A",
-                                                            "description": "Fine dining",
-                                                        },
-                                                },
-                                            ],
-                                        "currentPage": 1,
-                                        "pageSize": 10,
-                                        "totalPages": 1,
-                                        "totalItems": 3,
+                                        "id": 9,
+                                        "name": "jollof rice",
+                                        "price": 73.87,
+                                        "description": "This is an exortic jollof",
+                                        "createdAt": "2024-07-04T11:38:16.000Z",
+                                        "updatedAt": "2024-07-04T11:38:16.000Z",
+                                        "VendorId": 1,
+                                        "Vendor": {
+                                        "id": 1,
+                                        "email": "resa@gmail.com",
+                                        "name": "Restaurant A",
+                                        "description": "Fine dining"
+                                        }
                                     },
+                                    {
+                                        "id": 1,
+                                        "name": "Pasta",
+                                        "price": 12.5,
+                                        "description": "A little pasta",
+                                        "createdAt": "2024-06-25T19:56:12.000Z",
+                                        "updatedAt": "2024-06-25T19:56:12.000Z",
+                                        "VendorId": 1,
+                                        "Vendor": {
+                                        "id": 1,
+                                        "email": "resa@gmail.com",
+                                        "name": "Restaurant A",
+                                        "description": "Fine dining"
+                                        }
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "Burger",
+                                        "price": 8.5,
+                                        "description": "A little burger",
+                                        "createdAt": "2024-06-25T19:56:12.000Z",
+                                        "updatedAt": "2024-06-25T19:56:12.000Z",
+                                        "VendorId": 1,
+                                        "Vendor": {
+                                        "id": 1,
+                                        "email": "resa@gmail.com",
+                                        "name": "Restaurant A",
+                                        "description": "Fine dining"
+                                        }
+                                    },
+                                    {
+                                        "id": 3,
+                                        "name": "Pizza",
+                                        "price": 10,
+                                        "description": "A little pizza",
+                                        "createdAt": "2024-06-25T19:56:12.000Z",
+                                        "updatedAt": "2024-06-25T19:56:12.000Z",
+                                        "VendorId": 1,
+                                        "Vendor": {
+                                        "id": 1,
+                                        "email": "resa@gmail.com",
+                                        "name": "Restaurant A",
+                                        "description": "Fine dining"
+                                        }
+                                    }
+                                    ],
+                                    "currentPage": 1,
+                                    "pageSize": 10,
+                                    "totalPages": 1,
+                                    "totalItems": 4
+                                }
                             }
 
-    /api/v1/vendor/{id}/create/menu:
         post:
             tags:
                 - VENDOR RESTRICTED ROUTES
@@ -151,13 +160,13 @@ paths:
                   description: It enables vendors to create menu
                   required: true
                   schema:
-                      $ref: "#/definitions/menu"
+                    $ref: "#/definitions/menu"
                 - in: path
-                  name: id
+                  name: vendorId
                   required: true
                   schema:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
             responses:
                 200:
                     description: should return successful
@@ -166,19 +175,18 @@ paths:
                             {
                                 "status": true,
                                 "message": "Menu item created successfully",
-                                "data":
-                                    {
-                                        "createdAt": "2024-06-25T20:36:38.287Z",
-                                        "updatedAt": "2024-06-25T20:36:38.288Z",
-                                        "id": 8,
-                                        "name": "jollof rice",
-                                        "price": 73.87,
-                                        "description": "This is an exortic jollof",
-                                        "VendorId": "1",
-                                    },
+                                "data": {
+                                    "createdAt": "2024-07-04T11:38:16.213Z",
+                                    "updatedAt": "2024-07-04T11:38:16.214Z",
+                                    "id": 9,
+                                    "name": "jollof rice",
+                                    "price": "73.87",
+                                    "description": "This is an exortic jollof",
+                                    "VendorId": "1"
+                                }
                             }
 
-    /api/v1/vendor/menu/update/{menuId}:
+    /vendors/{vendorId}/menu/{menuId}:
         patch:
             tags:
                 - VENDOR RESTRICTED ROUTES
@@ -192,29 +200,31 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
+                  name: vendorId
+                  required: true
+                  schema:
+                    type: integer
+                    example: 1
+                - in: path
                   name: menuId
                   required: true
                   schema:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
                 - in: body
-                  name: Update menu item
+                  name: updateMenuItem
                   description: It enables vendors to update menu items
                   required: true
                   schema:
-                      $ref: "#/definitions/menu"
-
+                    $ref: "#/definitions/menu"
             responses:
                 200:
                     description: should return successful
                     examples:
                         application/json:
-                            {
-                                "status": true,
-                                "message": "Menu item updated successfully",
-                            }
+                            status: true
+                            message: Menu item updated successfully
 
-    /api/v1/vendor/menu/{menuId}:
         get:
             tags:
                 - VENDOR RESTRICTED ROUTES
@@ -228,44 +238,45 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
+                  name: vendorId
+                  required: true
+                  schema:
+                    type: integer
+                    example: 1
+                - in: path
                   name: menuId
                   required: true
                   schema:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
             responses:
                 200:
                     description: should return successful
                     examples:
                         application/json:
-                            {
-                                "status": true,
-                                "message": "Menu item retrieved successfully",
-                                "data":
-                                    {
-                                        "id": 8,
-                                        "name": "jollof rice",
-                                        "price": 80.87,
-                                        "description": "This is an exortic jollof",
-                                        "createdAt": "2024-06-25T20:36:38.000Z",
-                                        "updatedAt": "2024-06-25T20:37:46.000Z",
-                                        "VendorId": 1,
-                                        "Vendor":
-                                            {
-                                                "id": 1,
-                                                "email": "resa@gmail.com",
-                                                "name": "Restaurant A",
-                                                "description": "Fine dining",
-                                            },
-                                    },
+                            status: true
+                            message: Menu item retrieved successfully
+                            data: {
+                                "id": 9,
+                                "name": "jollof rice",
+                                "price": 89.87,
+                                "description": "This is an exortic jollof",
+                                "createdAt": "2024-07-04T11:38:16.000Z",
+                                "updatedAt": "2024-07-04T11:46:07.000Z",
+                                "VendorId": 1,
+                                "Vendor": {
+                                    "id": 1,
+                                    "email": "resa@gmail.com",
+                                    "name": "Restaurant A",
+                                    "description": "Fine dining"
+                                }
                             }
 
-    /api/v1/vendor/menu/{id}:
         delete:
             tags:
                 - VENDOR RESTRICTED ROUTES
             summary: DELETE AN ITEM IN A MENU
-            produces:
+            produces: 
                 - application/json
             parameters:
                 - in: header
@@ -274,21 +285,25 @@ paths:
                   required: true
                   default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
                 - in: path
-                  name: id
+                  name: vendorId
                   required: true
                   schema:
-                      type: integer
-                      example: 1
+                    type: integer
+                    example: 1
+                - in: path
+                  name: menuId
+                  required: true
+                  schema:
+                    type: integer
+                    example: 1
             responses:
                 200:
                     description: should return successful
                     examples:
                         application/json:
-                            {
-                                "status": true,
-                                "message": "Menu item deleted successfully",
-                            }
-
+                            status: true
+                            message: Menu item deleted successfully
+    
 definitions:
     menu:
         type: object
@@ -297,8 +312,8 @@ definitions:
                 type: string
                 default: jollof rice
             price:
-                type: number
-                default: 73.87
+                type: string
+                default: "73.87"
             description:
                 type: string
                 default: This is an exortic jollof

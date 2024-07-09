@@ -2,6 +2,12 @@ const { Sequelize } = require("sequelize")
 const dotenv = require("dotenv")
 dotenv.config()
 
+// Select database based on node environment
+const DB_NAME =
+    process.env.NODE_ENV === "test"
+        ? process.env.TEST_DB_NAME
+        : process.env.DB_NAME
+
 /**
  * Create a new Sequelize instance using database credentials from environment variables.
  *
@@ -15,7 +21,7 @@ dotenv.config()
  * Author: Emmanuel
  */
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
+    DB_NAME,
     process.env.DB_USER,
     process.env.DB_PASS,
     {

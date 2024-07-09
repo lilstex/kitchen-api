@@ -9,12 +9,22 @@ router.get(
     Validate(validator.listVendors),
     customerController.listVendors,
 )
-router.get("/vendors/:id", customerController.getVendor)
 router.get(
-    "/vendors/:id/menu",
+    "/vendors/:vendorId",
+    Validate(validator.getVendor),
+    customerController.getVendor,
+)
+
+router.get(
+    "/vendors/:vendorId/menu",
     Validate(validator.listMenu),
     customerController.listMenu,
 )
-router.get("/menu/:menuId", customerController.getMenu)
+
+router.get(
+    "/vendors/:vendorId/menu/:menuId",
+    Validate(validator.getMenu),
+    customerController.getMenu,
+)
 
 module.exports = router

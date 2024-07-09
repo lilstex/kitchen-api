@@ -1,6 +1,6 @@
 ---
 paths:
-    /api/v1/auth/register-customer:
+    /auth/customers/register:
         post:
             tags:
                 - AUTHENTICATION ROUTES
@@ -31,7 +31,7 @@ paths:
                                     },
                             }
 
-    /api/v1/auth/vendor-login:
+    /auth/customers/login:
         post:
             tags:
                 - AUTHENTICATION ROUTES
@@ -42,6 +42,35 @@ paths:
                 - in: body
                   name: login endpoint
                   description: It enables vendors to login
+                  required: true
+                  schema:
+                      $ref: "#/definitions/customer-login"
+            responses:
+                200:
+                    description: should return login successful
+                    examples:
+                        application/json:
+                            {
+                                "status": true,
+                                "message": "Login successful",
+                                "data":
+                                    {
+                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE5MzMxNzAzfQ.OqttAVTrzZYgJFbS3a7kiDA139-AvBU9oFFhe7STwZo",
+                                        "id": 1
+                                    },
+                            }
+
+    /auth/vendors/login:
+        post:
+            tags:
+                - AUTHENTICATION ROUTES
+            summary: CUSTOMER LOGIN ENDPOINT
+            produces:
+                - application/json
+            parameters:
+                - in: body
+                  name: login endpoint
+                  description: It enables customers to login
                   required: true
                   schema:
                       $ref: "#/definitions/vendor-login"
@@ -56,34 +85,7 @@ paths:
                                 "data":
                                     {
                                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE5MzMxNzAzfQ.OqttAVTrzZYgJFbS3a7kiDA139-AvBU9oFFhe7STwZo",
-                                    },
-                            }
-
-    /api/v1/auth/customer-login:
-        post:
-            tags:
-                - AUTHENTICATION ROUTES
-            summary: CUSTOMER LOGIN ENDPOINT
-            produces:
-                - application/json
-            parameters:
-                - in: body
-                  name: login endpoint
-                  description: It enables customers to login
-                  required: true
-                  schema:
-                      $ref: "#/definitions/login"
-            responses:
-                200:
-                    description: should return login successful
-                    examples:
-                        application/json:
-                            {
-                                "status": true,
-                                "message": "Login successful",
-                                "data":
-                                    {
-                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE5MzMxNzAzfQ.OqttAVTrzZYgJFbS3a7kiDA139-AvBU9oFFhe7STwZo",
+                                        "id": 1
                                     },
                             }
 
@@ -98,7 +100,7 @@ definitions:
                 type: string
                 default: password
 
-    login:
+    customer-login:
         type: object
         properties:
             email:

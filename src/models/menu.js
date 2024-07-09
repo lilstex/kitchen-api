@@ -16,7 +16,7 @@ const MenuItem = sequelize.define("MenuItem", {
         allowNull: false,
     },
     price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     description: {
